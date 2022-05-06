@@ -1,9 +1,11 @@
 package Sensors;
 
+import Alarm.Room;
+
 public class RadiationSensor extends Sensor {
 
     //----------CONSTRUCTORS----------
-    public RadiationSensor(String name, String room, int valMax, int valMin){
+    public RadiationSensor(String name, Room room, int valMax, int valMin){
         this.unit = "Becquerel";
         this.name = name;
         this.room = room;
@@ -11,7 +13,7 @@ public class RadiationSensor extends Sensor {
         this.valMin = valMin;
     }
 
-    public RadiationSensor(String name, String room){
+    public RadiationSensor(String name, Room room){
         this.unit = "Becquerel";
         this.name = name;
         this.room = room;
@@ -25,7 +27,7 @@ public class RadiationSensor extends Sensor {
         return "RadiationSensor{}";
     }
     //----------GETTER----------
-    public String getRoom(){
+    public Room getRoom(){
         return this.room;
     }
 
