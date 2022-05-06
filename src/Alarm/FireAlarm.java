@@ -1,3 +1,5 @@
+package Alarm;
+
 import java.time.LocalDateTime;
 
 public class FireAlarm extends EventAlarm {

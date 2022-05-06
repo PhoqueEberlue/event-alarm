@@ -1,4 +1,6 @@
-public class FireSensor extends Sensors{
+package Sensors;
+
+public class FireSensor extends Sensor {
 
     //----------CONSTRUCTORS----------
     public FireSensor(String name, String room, int valMax, int valMin){
@@ -10,7 +12,7 @@ public class FireSensor extends Sensors{
     }
 
     public FireSensor(String name, String room){
-        this.unit = unit;
+        this.unit = "hot";
         this.name = name;
         this.room = room;
         this.valMax = 1000;
@@ -20,7 +22,7 @@ public class FireSensor extends Sensors{
     //----------TO STRING----------
     @java.lang.Override
     public java.lang.String toString() {
-        return "FireSensor{}";
+        return "Sensors.Sensors.FireSensor{}";
     }
     //----------GETTER----------
     public String getRoom(){
@@ -31,11 +33,11 @@ public class FireSensor extends Sensors{
         return this.unit;
     }
 
-    public String getValMax(){
+    public int getValMax(){
         return this.valMax;
     }
-    public String getValMin(){
-        return this.;
+    public int getValMin(){
+        return this.valMin;
     }
     public String getName(){
         return this.name;

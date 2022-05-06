@@ -1,3 +1,7 @@
+package Listeners;
+
+import Alarm.EventAlarm;
+
 public class MonitorB implements Listener {
     public MonitorB() {
     }

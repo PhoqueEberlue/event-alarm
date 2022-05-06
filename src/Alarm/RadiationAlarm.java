@@ -1,3 +1,7 @@
+package Alarm;
+
+import Alarm.EventAlarm;
+
 import java.time.LocalDateTime;
 
 public class RadiationAlarm extends EventAlarm {
