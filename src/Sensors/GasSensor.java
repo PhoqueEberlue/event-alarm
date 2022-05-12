@@ -22,7 +22,7 @@ public class GasSensor extends Sensor {
     }
 
     //----------TO STRING----------
-    @java.lang.Override
+    @Override
     public java.lang.String toString() {
         return "Sensors.Sensors.GasSensor{}";
     }

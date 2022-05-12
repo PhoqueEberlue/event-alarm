@@ -1,6 +1,9 @@
 package Sensors;
 
 import Alarm.Room;
+import Listeners.Listener;
+import Listeners.MonitorA;
+import Listeners.MonitorB;
 
 public class RadiationSensor extends Sensor {
 
@@ -22,7 +25,7 @@ public class RadiationSensor extends Sensor {
     }
 
     //----------TO STRING----------
-    @java.lang.Override
+    @Override
     public java.lang.String toString() {
         return "RadiationSensor{}";
     }
@@ -43,5 +46,15 @@ public class RadiationSensor extends Sensor {
     }
     public String getName(){
         return this.name;
+    }
+
+    //----------SETTER----------
+    @Override
+    public void addListener(Listener listener) throws SensorNotCompatibleException {
+        if (listener instanceof MonitorB) {
+            this.listListener.add(listener);
+        } else {
+            throw new SensorNotCompatibleException(listener.getClass() + " class is not supported by " + this.getClass());
+        }
     }
 }

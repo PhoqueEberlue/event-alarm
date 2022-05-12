@@ -8,6 +8,6 @@ public class MonitorB implements Listener {
 
     @Override
     public void Listen(EventAlarm alarmEvent) {
-
+        System.out.println(alarmEvent);
     }
 }

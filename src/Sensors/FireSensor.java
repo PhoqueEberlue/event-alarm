@@ -1,11 +1,14 @@
 package Sensors;
 
 import Alarm.Room;
+import Listeners.Listener;
+import Listeners.MonitorA;
+import Listeners.MonitorB;
 
 public class FireSensor extends Sensor {
 
     //----------CONSTRUCTORS----------
-    public FireSensor(String name, Room room, int valMax, int valMin){
+    public FireSensor(String name, Room room, int valMax, int valMin) {
         this.unit = "hot";
         this.name = name;
         this.room = room;
@@ -13,7 +16,7 @@ public class FireSensor extends Sensor {
         this.valMin = valMin;
     }
 
-    public FireSensor(String name, Room room){
+    public FireSensor(String name, Room room) {
         this.unit = "hot";
         this.name = name;
         this.room = room;
@@ -22,26 +25,39 @@ public class FireSensor extends Sensor {
     }
 
     //----------TO STRING----------
-    @java.lang.Override
+    @Override
     public java.lang.String toString() {
         return "Sensors.Sensors.FireSensor{}";
     }
+
     //----------GETTER----------
-    public Room getRoom(){
+    public Room getRoom() {
         return this.room;
     }
 
-    public String getUnit(){
+    public String getUnit() {
         return this.unit;
     }
 
-    public int getValMax(){
+    public int getValMax() {
         return this.valMax;
     }
-    public int getValMin(){
+
+    public int getValMin() {
         return this.valMin;
     }
-    public String getName(){
+
+    public String getName() {
         return this.name;
+    }
+
+    //----------SETTER----------
+    @Override
+    public void addListener(Listener listener) throws SensorNotCompatibleException {
+        if (listener instanceof MonitorA) {
+            this.listListener.add(listener);
+        } else {
+            throw new SensorNotCompatibleException(listener.getClass() + " class is not supported by " + this.getClass());
+        }
     }
 }
