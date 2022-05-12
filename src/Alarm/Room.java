@@ -6,4 +6,11 @@ public class Room {
     public Room(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
