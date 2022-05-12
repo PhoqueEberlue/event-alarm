@@ -33,6 +33,9 @@ public abstract class Sensor {
     protected Room room;
     protected int valMax;
     protected int valMin;
+
+
+    protected int val;
     protected String unit;
 
     public List<Listener> getListListener() {
@@ -95,4 +98,11 @@ public abstract class Sensor {
                 '}';
     }
 
+    public int getVal() {
+        return val;
+    }
+
+    public void setVal(int val) {
+        this.val = val;
+    }
 }
