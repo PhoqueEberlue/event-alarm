@@ -1,6 +1,9 @@
 package Listeners;
 
 import Alarm.EventAlarm;
+import gui.TabAlarmMonitor;
+
+import java.util.ArrayList;
 
 public class MonitorA implements Listener {
     public MonitorA() {
@@ -8,7 +11,8 @@ public class MonitorA implements Listener {
 
     @Override
     public void Listen(EventAlarm alarmEvent) {
-        String res = this.getClass() + " detected a " + alarmEvent.getClass() + " in the room " + alarmEvent.getLocalisation();
+        String res = this.getClass() + " detected a " + alarmEvent.getClass()
+                + " in the room " + alarmEvent.getLocalisation();
         System.out.println(res);
         // System.out.println(alarmEvent);
     }

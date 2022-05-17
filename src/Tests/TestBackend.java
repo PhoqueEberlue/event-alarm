@@ -44,8 +44,6 @@ public class TestBackend {
             } catch (SensorNotCompatibleException e) {
                 e.printStackTrace();
             }
-
-
         }
 
         while (true) {

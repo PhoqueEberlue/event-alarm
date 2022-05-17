@@ -26,9 +26,9 @@ public class TabMonitor{
         this.cellList.add(new CellMonitor(s, this.panel));
     }
 
-    public void refresh(){
-        for(CellMonitor c : this.cellList){
-            c.update();
-        }
-    }
+    //private void refresh(){
+    //    for(CellMonitor c : this.cellList){
+    //        c.update();
+    //    }
+    //}
 }

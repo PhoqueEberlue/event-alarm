@@ -1,11 +1,13 @@
 package gui;
+import Alarm.EventAlarm;
+import Listeners.Listener;
 import Sensors.Sensor;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class CellMonitor {
+public class CellMonitor implements Listener {
     private JLabel name;
     private JLabel value;
     private JLabel roomName;
@@ -38,8 +40,13 @@ public class CellMonitor {
         this.sensor = sensor;
     }
 
-    public void update(){
+    private void update(){
         this.value.setText(String.valueOf(this.sensor.getVal()));
         this.name.setText(this.sensor.getName());
+    }
+
+    @Override
+    public void Listen(EventAlarm alarmEvent) {
+        this.update();
     }
 }

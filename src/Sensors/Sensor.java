@@ -22,8 +22,7 @@ public abstract class Sensor {
 
 
     public void launchAlert(EventAlarm eventAlarm) {
-        for (Listener listener :
-                this.listListener) {
+        for (Listener listener : this.listListener) {
             listener.Listen(eventAlarm);
         }
     }

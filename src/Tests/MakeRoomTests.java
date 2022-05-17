@@ -59,7 +59,7 @@ public class MakeRoomTests {
         MonitorA monitorA = new MonitorA();
         MonitorB monitorB = new MonitorB();
 
-        for (int i = 0; i < nb_sensors; i++) {
+        for (int i = 0 ; i < nb_sensors ; i++) {
             roomList.add(new Room("C" + 200 + i));
             fireSensorList.add(new FireSensor("FireDetector" + i, roomList.get(i)));
             gasSensorList.add(new GasSensor("GasSensor" + i, roomList.get(i)));
