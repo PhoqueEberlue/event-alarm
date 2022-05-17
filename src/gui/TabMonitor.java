@@ -6,13 +6,16 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class TabMonitor{
-    private ArrayList<JButton> sensorList;
+    private ArrayList<JPanel> sensorList;
+    private ArrayList<CellMonitor> cellList;
     private JTabbedPane tabbedPane;
     private JPanel panel;
-    public TabMonitor(JTabbedPane tabbedPane, JFrame frame){
-        panel = new JPanel(false);
+    public TabMonitor(JTabbedPane tabbedPane){
+        this.sensorList = new ArrayList<>();
+        this.cellList = new ArrayList<>();
+        this.panel = new JPanel();
+        this.panel.setLayout(new GridLayout(3,3));
         tabbedPane.addTab("monitor", null, panel,"POGGERS");
-        panel.setLayout(new GridLayout(getSize(frame).height / 100, getSize(frame).width / 100));
     }
 
     private Rectangle getSize(JFrame frame){
@@ -20,12 +23,12 @@ public class TabMonitor{
     }
 
     public void addCell(Sensor s){
-        JButton b = new JButton(s.getName());
-        sensorList.add(b);
-        panel.add(b);
+        this.cellList.add(new CellMonitor(s, this.panel));
     }
 
-    public void refresh(JFrame frame){
-        SwingUtilities.updateComponentTreeUI(frame);
+    public void refresh(){
+        for(CellMonitor c : this.cellList){
+            c.update();
+        }
     }
 }

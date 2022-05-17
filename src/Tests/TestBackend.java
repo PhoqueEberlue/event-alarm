@@ -12,7 +12,6 @@ import Sensors.FireSensor;
 import Sensors.GasSensor;
 import Sensors.RadiationSensor;
 import Sensors.SensorNotCompatibleException;
-
 import javax.swing.plaf.basic.BasicRadioButtonMenuItemUI;
 import java.util.ArrayList;
 import java.util.List;
