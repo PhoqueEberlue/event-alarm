@@ -24,15 +24,15 @@ public class MainWindow {
         this.frame.setLocationRelativeTo(null);
         this.frame.setVisible(true);
         this.tabbedPane = new JTabbedPane();
-        this.createTabMonitor();
         this.createTabAlarm();
         this.createTabAlarmMonitor();
+        this.createTabMonitor();
         this.addAllMonitorCells();
         this.frame.getContentPane().add(this.tabbedPane, BorderLayout.CENTER);
     }
 
     private void createTabAlarm(){
-        this.tabAlarm = new TabAlarm(this.tabbedPane);
+        this.tabAlarm = new TabAlarm(this.tabbedPane, this);
     }
 
     private void addAllMonitorCells(){
@@ -50,7 +50,11 @@ public class MainWindow {
     private void createTabMonitor(){
         this.tabMonitor = new TabMonitor(this.tabbedPane);
     }
+    
     private void createTabAlarmMonitor() {
         this.tabAlarmMonitor = new TabAlarmMonitor(this.tabbedPane);
+
+    public MakeRoomTests getRoom() {
+        return room;
     }
 }
