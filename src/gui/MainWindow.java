@@ -1,4 +1,5 @@
 package gui;
+import Alarm.Room;
 import Sensors.Sensor;
 import Tests.MakeRoomTests;
 
@@ -10,11 +11,25 @@ import java.util.ArrayList;
 
 public class MainWindow {
     protected JFrame frame;
+
+    public TabMonitor getTabMonitor() {
+        return tabMonitor;
+    }
+
+    public TabAlarm getTabAlarm() {
+        return tabAlarm;
+    }
+
+    public TabAlarmMonitor getTabAlarmMonitor() {
+        return tabAlarmMonitor;
+    }
+
     private JTabbedPane tabbedPane;
     private TabMonitor tabMonitor;
     private TabAlarm tabAlarm;
     private TabAlarmMonitor tabAlarmMonitor;
     private MakeRoomTests room;
+
     public MainWindow(MakeRoomTests r){
         this.room = r;
         this.frame = new JFrame("Alarm tester");
@@ -52,9 +67,26 @@ public class MainWindow {
     }
     
     private void createTabAlarmMonitor() {
-        this.tabAlarmMonitor = new TabAlarmMonitor(this.tabbedPane);
+        this.tabAlarmMonitor = new TabAlarmMonitor(this.tabbedPane, this);
+    }
 
     public MakeRoomTests getRoom() {
-        return room;
+        return this.room;
+    }
+
+    public Sensor findRadiationSensor(String name){
+        for(Sensor s : this.room.getRadiationSensorsList()){
+            if(s.getName() == name)
+                return s;
+        }
+        return null;
+    }
+
+    public Sensor findFireSensor(String name){
+        for(Sensor s : this.room.getFireSensorList()){
+            if(s.getName() == name)
+                return s;
+        }
+        return null;
     }
 }

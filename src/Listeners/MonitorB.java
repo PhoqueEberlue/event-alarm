@@ -9,7 +9,9 @@ public class MonitorB implements Listener {
 
     @Override
     public void Listen(EventAlarm alarmEvent) {
-
-        System.out.println(alarmEvent);
+        String res = this.getClass() + " detected a " + alarmEvent.getClass()
+                + " in the room " + alarmEvent.getLocalisation();
+        System.out.println(res);
+        // System.out.println(alarmEvent);
     }
 }

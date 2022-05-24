@@ -53,7 +53,8 @@ public class RadiationSensor extends Sensor {
     public void addListener(Listener listener) throws SensorNotCompatibleException {
         if (listener instanceof MonitorB) {
             this.listListener.add(listener);
-        } else {
+        }
+        else {
             throw new SensorNotCompatibleException(listener.getClass() + " class is not supported by " + this.getClass());
         }
     }

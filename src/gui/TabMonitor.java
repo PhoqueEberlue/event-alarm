@@ -15,7 +15,7 @@ public class TabMonitor{
         this.cellList = new ArrayList<>();
         this.panel = new JPanel();
         this.panel.setLayout(new GridLayout(3,3));
-        tabbedPane.addTab("monitor", null, panel,"POGGERS");
+        tabbedPane.addTab("monitor", null, panel,"wowzers");
     }
 
     private Rectangle getSize(JFrame frame){
