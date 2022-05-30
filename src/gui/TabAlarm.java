@@ -35,39 +35,42 @@ public class TabAlarm{
         this.handleTypeAlarm();
     }
 
-    private void handleTypeAlarm(){
-        JPanel jPanel = new JPanel();
-        JTextField typeField = new JTextField("What alarm do you wanna trigger ?");
+    private void handleTypeAlarm(){ //first pane, asking for the type of alarm to trigger
+                                    //It is ugly to do this by checking strings, but how it was described in the
+                                    //assignment
+        //TODO : comboBox ?
+        JPanel jPanel = new JPanel();//not needed, but makes it handy to remove
+        JTextField typeField = new JTextField("What kind of alarm do you want to trigger ?");
         typeField.setPreferredSize(new Dimension(150, 30));
         JButton button = new JButton("submit");
         jPanel.add(button);
         jPanel.add(typeField);
 
-        this.panel.add(jPanel);
+        this.panel.add(jPanel);//add handy panel to actual panel
 
         button.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {//on click check what was input
                 System.out.println(typeField.getText());
                 if(typeField.getText().equalsIgnoreCase("fire")){//NOTE cant use this here dont blame me
                     System.out.println("fire");
                     panel.remove(jPanel);
-                    createFireForm();
+                    createFireForm();//go to form
                 }
                 else if(typeField.getText().toLowerCase().equals("gas")) {
                     panel.remove(jPanel);
-                    createGasForm();
+                    createGasForm();//go to form
                 }
                 else if(typeField.getText().toLowerCase().equals("radiation")) {
                     panel.remove(jPanel);
-                    createRadiationForm();
+                    createRadiationForm();//go to form
                 }
             }
         });
     }
 
     private void createFireForm(){
-        JPanel jPanel = new JPanel();
+        JPanel jPanel = new JPanel();//handy panel
         this.dateTextField = new JTextField();
         this.dateTextField.setPreferredSize(new Dimension(150, 30));
 
@@ -81,7 +84,7 @@ public class TabAlarm{
 
         int i = 0;
 
-        for (FireSensor fireSensor: this.mainWindow.getRoom().getFireSensorList()) {
+        for (FireSensor fireSensor: this.mainWindow.getRoom().getFireSensorList()) {//for combo box
             listFireSensor[i] = fireSensor.getName();
             i++;
         }
@@ -93,20 +96,35 @@ public class TabAlarm{
         jPanel.add(jComboBoxFire);
         jPanel.add(this.submitButton);
 
-        this.panel.add(jPanel);
+        this.panel.add(jPanel);//adding handy to main panel
 
         this.submitButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                Object no = jComboBoxFire.getSelectedItem();
-                System.out.println(no);
-                System.out.println(dateTextField.getText());
-                System.out.println(priorityLevelTextField.getText());
-            }
-        });
+            public void actionPerformed(ActionEvent e){
+                String sensorName = (String) jComboBoxFire.getSelectedItem();//casting from obj
+                Sensor sensor = mainWindow.findFireSensor(sensorName);
+
+                if(sensor == null){//check for null (see findXXXSensor in mainWindow)
+                    System.out.println("NULL SENSOR ! " + sensorName);
+                    return;
+                }
+
+                int priority;
+                if(priorityLevelTextField.getText().equals(""))//if empty assume 1
+                    priority = 1;
+                else
+                    priority = Integer.parseInt(priorityLevelTextField.getText());
+
+                EventAlarm eventAlarm = new FireAlarm(LocalDateTime.now(),//create event to pass
+                        sensor.getRoom(), priority, sensor);
+
+                mainWindow.getRoom().getMonitorA().Listen(eventAlarm);//not sure if handle it here or in monitor
+                mainWindow.getTabAlarmMonitor().Listen(eventAlarm);//good enough Clueless
+                }
+            });
     }
 
-    private void createGasForm(){
+    private void createGasForm(){//same as above, but change Fire->Gas
         JPanel jPanel = new JPanel();
         this.dateTextField = new JTextField();
         this.dateTextField.setPreferredSize(new Dimension(150, 30));
@@ -138,15 +156,30 @@ public class TabAlarm{
         this.submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Object no = jComboBoxGas.getSelectedItem();
-                System.out.println(no);
-                System.out.println(dateTextField.getText());
-                System.out.println(priorityLevelTextField.getText());
+                String sensorName = (String) jComboBoxGas.getSelectedItem();//casting from obj
+                Sensor sensor = mainWindow.findRadiationSensor(sensorName);
+
+                if(sensor == null){
+                    System.out.println("NULL SENSOR ! " + sensorName);
+                }
+
+                int priority;
+                if(priorityLevelTextField.getText().equals(""))
+                    priority = 1;
+                else
+                    priority = Integer.parseInt(priorityLevelTextField.getText());
+
+                EventAlarm eventAlarm = new FireAlarm(LocalDateTime.now(),
+                        sensor.getRoom(), priority, sensor);
+
+                mainWindow.getRoom().getMonitorA().Listen(eventAlarm);//not sure if handle it here or in monitor
+                mainWindow.getTabAlarmMonitor().Listen(eventAlarm);//good enough Clueless
             }
         });
+
     }
 
-    private void createRadiationForm(){
+    private void createRadiationForm(){//same as above, but change Gas->Radiation
         JPanel jPanel = new JPanel();
         this.dateTextField = new JTextField();//NOTE need to be a member ?
         this.dateTextField.setPreferredSize(new Dimension(150, 30));

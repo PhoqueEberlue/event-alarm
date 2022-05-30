@@ -8,6 +8,8 @@ import Sensors.Sensor;
 import Sensors.SensorNotCompatibleException;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class TabAlarmMonitor implements Listener {
@@ -37,5 +39,12 @@ public class TabAlarmMonitor implements Listener {
         dialog.add(text);
         dialog.add(btn);
         dialog.setVisible(true);
+
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {//when click new print in window details
+
+            }
+        });
     }
 }
