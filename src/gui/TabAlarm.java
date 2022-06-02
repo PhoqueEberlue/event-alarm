@@ -1,6 +1,8 @@
 package gui;
 import Alarm.EventAlarm;
 import Alarm.FireAlarm;
+import Alarm.GasAlarm;
+import Alarm.RadiationAlarm;
 import Listeners.MonitorA;
 import Sensors.FireSensor;
 import Sensors.GasSensor;
@@ -14,6 +16,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 public class TabAlarm{
@@ -21,7 +24,6 @@ public class TabAlarm{
     private JPanel panel;
     private MainWindow mainWindow;
 
-    private JTextField dateTextField;
     private JTextField priorityLevelTextField;
     private JButton submitButton;
     private JButton chooseAlarmType;
@@ -30,7 +32,7 @@ public class TabAlarm{
     public TabAlarm(JTabbedPane tabbedPane, MainWindow mainWindow){
         this.mainWindow = mainWindow;
         this.panel = new JPanel(false);
-        this.panel.setLayout(new GridLayout(1,3));
+        this.panel.setLayout(new GridBagLayout());
         tabbedPane.addTab("Alarm", null, panel,"monkaS");
         this.handleTypeAlarm();
     }
@@ -38,30 +40,34 @@ public class TabAlarm{
     private void handleTypeAlarm(){ //first pane, asking for the type of alarm to trigger
                                     //It is ugly to do this by checking strings, but how it was described in the
                                     //assignment
-        //TODO : comboBox ?
+
+
         JPanel jPanel = new JPanel();//not needed, but makes it handy to remove
-        JTextField typeField = new JTextField("What kind of alarm do you want to trigger ?");
-        typeField.setPreferredSize(new Dimension(150, 30));
+
+        String[] choices = {"FireAlarm", "GasAlarm", "RadiationAlarm"};
+
+        JComboBox<String> jComboChoice = new JComboBox<>(choices);
+
+        //typeField.setPreferredSize(new Dimension(150, 30));
         JButton button = new JButton("submit");
         jPanel.add(button);
-        jPanel.add(typeField);
+        jPanel.add(jComboChoice);
+
 
         this.panel.add(jPanel);//add handy panel to actual panel
 
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {//on click check what was input
-                System.out.println(typeField.getText());
-                if(typeField.getText().equalsIgnoreCase("fire")){//NOTE cant use this here dont blame me
-                    System.out.println("fire");
+                if(jComboChoice.getSelectedItem().toString().equals("FireAlarm")){
                     panel.remove(jPanel);
                     createFireForm();//go to form
                 }
-                else if(typeField.getText().toLowerCase().equals("gas")) {
+                else if(jComboChoice.getSelectedItem().toString().equals("GasAlarm")){
                     panel.remove(jPanel);
                     createGasForm();//go to form
                 }
-                else if(typeField.getText().toLowerCase().equals("radiation")) {
+                else if(jComboChoice.getSelectedItem().equals("RadiationAlarm")) {
                     panel.remove(jPanel);
                     createRadiationForm();//go to form
                 }
@@ -71,10 +77,20 @@ public class TabAlarm{
 
     private void createFireForm(){
         JPanel jPanel = new JPanel();//handy panel
-        this.dateTextField = new JTextField();
-        this.dateTextField.setPreferredSize(new Dimension(150, 30));
 
-        this.priorityLevelTextField = new JTextField();
+        JButton backBtn = new JButton("Go back");
+        backBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                panel.remove(jPanel);
+                handleTypeAlarm();
+                panel.repaint();
+            }
+        });
+
+
+        jPanel.setLayout(new GridLayout());
+        this.priorityLevelTextField = new JTextField("Priority level");
         this.priorityLevelTextField.setPreferredSize(new Dimension(150, 30));
 
         this.submitButton = new JButton("Submit fire Alarm");
@@ -91,10 +107,10 @@ public class TabAlarm{
 
         JComboBox<String> jComboBoxFire = new JComboBox<>(listFireSensor);
 
-        jPanel.add(this.dateTextField);
         jPanel.add(this.priorityLevelTextField);
         jPanel.add(jComboBoxFire);
         jPanel.add(this.submitButton);
+        jPanel.add(backBtn);
 
         this.panel.add(jPanel);//adding handy to main panel
 
@@ -105,12 +121,11 @@ public class TabAlarm{
                 Sensor sensor = mainWindow.findFireSensor(sensorName);
 
                 if(sensor == null){//check for null (see findXXXSensor in mainWindow)
-                    System.out.println("NULL SENSOR ! " + sensorName);
                     return;
                 }
 
                 int priority;
-                if(priorityLevelTextField.getText().equals(""))//if empty assume 1
+                if(priorityLevelTextField.getText().equals("Priority level"))//if empty assume 1
                     priority = 1;
                 else
                     priority = Integer.parseInt(priorityLevelTextField.getText());
@@ -119,17 +134,25 @@ public class TabAlarm{
                         sensor.getRoom(), priority, sensor);
 
                 mainWindow.getRoom().getMonitorA().Listen(eventAlarm);//not sure if handle it here or in monitor
-                mainWindow.getTabAlarmMonitor().Listen(eventAlarm);//good enough Clueless
                 }
             });
     }
 
     private void createGasForm(){//same as above, but change Fire->Gas
         JPanel jPanel = new JPanel();
-        this.dateTextField = new JTextField();
-        this.dateTextField.setPreferredSize(new Dimension(150, 30));
 
-        this.priorityLevelTextField = new JTextField();
+        JButton backBtn = new JButton("Go back");
+        backBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                panel.remove(jPanel);
+                handleTypeAlarm();
+                panel.repaint();
+            }
+        });
+
+        jPanel.setLayout(new GridLayout());
+        this.priorityLevelTextField = new JTextField("Priority level");
         this.priorityLevelTextField.setPreferredSize(new Dimension(150, 30));
 
         this.submitButton = new JButton("Submit fire Alarm");
@@ -146,10 +169,10 @@ public class TabAlarm{
 
         JComboBox<String> jComboBoxGas = new JComboBox<>(listGasSensor);
 
-        jPanel.add(this.dateTextField);
         jPanel.add(this.priorityLevelTextField);
         jPanel.add(jComboBoxGas);
         jPanel.add(this.submitButton);
+        jPanel.add(backBtn);
 
         this.panel.add(jPanel);
 
@@ -157,23 +180,22 @@ public class TabAlarm{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String sensorName = (String) jComboBoxGas.getSelectedItem();//casting from obj
-                Sensor sensor = mainWindow.findRadiationSensor(sensorName);
+                Sensor sensor = mainWindow.findGasSensor(sensorName);
 
                 if(sensor == null){
                     System.out.println("NULL SENSOR ! " + sensorName);
                 }
 
                 int priority;
-                if(priorityLevelTextField.getText().equals(""))
+                if(priorityLevelTextField.getText().equals("Priority level"))
                     priority = 1;
                 else
                     priority = Integer.parseInt(priorityLevelTextField.getText());
 
-                EventAlarm eventAlarm = new FireAlarm(LocalDateTime.now(),
+                EventAlarm eventAlarm = new GasAlarm(LocalDateTime.now(),
                         sensor.getRoom(), priority, sensor);
 
                 mainWindow.getRoom().getMonitorA().Listen(eventAlarm);//not sure if handle it here or in monitor
-                mainWindow.getTabAlarmMonitor().Listen(eventAlarm);//good enough Clueless
             }
         });
 
@@ -181,10 +203,19 @@ public class TabAlarm{
 
     private void createRadiationForm(){//same as above, but change Gas->Radiation
         JPanel jPanel = new JPanel();
-        this.dateTextField = new JTextField();//NOTE need to be a member ?
-        this.dateTextField.setPreferredSize(new Dimension(150, 30));
 
-        this.priorityLevelTextField = new JTextField();
+        JButton backBtn = new JButton("Go back");
+        backBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                panel.remove(jPanel);
+                handleTypeAlarm();
+                panel.repaint();
+            }
+        });
+
+        jPanel.setLayout(new GridLayout());
+        this.priorityLevelTextField = new JTextField("Priority level");
         this.priorityLevelTextField.setPreferredSize(new Dimension(150, 30));
 
         this.submitButton = new JButton("Submit radiation Alarm");
@@ -201,16 +232,16 @@ public class TabAlarm{
 
         JComboBox<String> jComboBoxRadiation = new JComboBox<>(listRadiationSensor);
 
-        jPanel.add(this.dateTextField);
         jPanel.add(this.priorityLevelTextField);
         jPanel.add(jComboBoxRadiation);
         jPanel.add(this.submitButton);
+        jPanel.add(backBtn);
 
         this.panel.add(jPanel);
 
         this.submitButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {//why isnt ass an offensive word
+            public void actionPerformed(ActionEvent e) {
                 String sensorName = (String) jComboBoxRadiation.getSelectedItem();//casting from obj
                 Sensor sensor = mainWindow.findRadiationSensor(sensorName);
 
@@ -219,16 +250,15 @@ public class TabAlarm{
                 }
 
                 int priority;
-                if(priorityLevelTextField.getText().equals(""))
+                if(priorityLevelTextField.getText().equals("Priority level"))
                     priority = 1;
                 else
                     priority = Integer.parseInt(priorityLevelTextField.getText());
 
-                EventAlarm eventAlarm = new FireAlarm(LocalDateTime.now(),
+                EventAlarm eventAlarm = new RadiationAlarm(LocalDateTime.now(),
                         sensor.getRoom(), priority, sensor);
 
                 mainWindow.getRoom().getMonitorA().Listen(eventAlarm);//not sure if handle it here or in monitor
-                mainWindow.getTabAlarmMonitor().Listen(eventAlarm);//good enough Clueless
             }
         });
     }

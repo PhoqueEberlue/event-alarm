@@ -61,7 +61,7 @@ public class MakeRoomTests {
 
         for (int i = 0 ; i < nb_sensors ; i++) {
             roomList.add(new Room("C" + 20 + i));//lmao 20 + i is a string, so concatenating both
-            fireSensorList.add(new FireSensor("FireDetector" + i, roomList.get(i)));
+            fireSensorList.add(new FireSensor("FireSensor" + i, roomList.get(i)));
             gasSensorList.add(new GasSensor("GasSensor" + i, roomList.get(i)));
             radiationSensorsList.add(new RadiationSensor("RadiationSensor" + i, roomList.get(i)));
 

@@ -1,6 +1,8 @@
 package Alarm;
 import Sensors.Sensor;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.EventObject;
 
 public abstract class EventAlarm extends EventObject {
@@ -29,10 +31,10 @@ public abstract class EventAlarm extends EventObject {
 
     @Override
     public String toString() {
-        return "EventAlarm{" +
-                "dateEvent=" + this.dateEvent +
-                ", localisation=" + this.localisation +
-                ", priorityLevel=" + this.priorityLevel +
-                '}';
+        return "Alarm in " +
+                this.localisation.toString() +
+                " at " + this.dateEvent.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)) +
+                " with priority " + this.priorityLevel +
+                " and type " + this.getClass().getSimpleName();
     }
 }

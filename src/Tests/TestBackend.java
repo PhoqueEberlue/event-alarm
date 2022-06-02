@@ -56,11 +56,11 @@ public class TestBackend {
             fireSensor.launchAlert(fireAlarm);
 
             RadiationSensor radiationSensor = radiationSensorsList.get(i);
-            RadiationAlarm radiationAlarm = new RadiationAlarm(LocalDateTime.now(), radiationSensor.getRoom(), random.nextInt(5), random.nextInt(100), radiationSensor);
+            RadiationAlarm radiationAlarm = new RadiationAlarm(LocalDateTime.now(), radiationSensor.getRoom(), random.nextInt(5), radiationSensor);
             radiationSensor.launchAlert(radiationAlarm);
 
             GasSensor gasSensor = gasSensorList.get(i);
-            GasAlarm gasAlarm = new GasAlarm(LocalDateTime.now(), gasSensor.getRoom(), random.nextInt(5), "CO2", gasSensor);
+            GasAlarm gasAlarm = new GasAlarm(LocalDateTime.now(), gasSensor.getRoom(), random.nextInt(5), gasSensor);
             gasSensor.launchAlert(gasAlarm);
 
             try {

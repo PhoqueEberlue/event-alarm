@@ -1,4 +1,5 @@
 package gui;
+import Alarm.EventAlarm;
 import Sensors.Sensor;
 
 import javax.swing.*;
@@ -10,11 +11,12 @@ public class TabMonitor{
     private ArrayList<CellMonitor> cellList;
     private JTabbedPane tabbedPane;
     private JPanel panel;
+
     public TabMonitor(JTabbedPane tabbedPane){
         this.sensorList = new ArrayList<>();
         this.cellList = new ArrayList<>();
         this.panel = new JPanel();
-        this.panel.setLayout(new GridLayout(3,3));
+        this.panel.setLayout(new GridLayout(3,1));
         tabbedPane.addTab("monitor", null, panel,"wowzers");
     }
 
@@ -26,9 +28,13 @@ public class TabMonitor{
         this.cellList.add(new CellMonitor(s, this.panel));
     }
 
-    //private void refresh(){
-    //    for(CellMonitor c : this.cellList){
-    //        c.update();
-    //    }
-    //}
+    public void Listen(EventAlarm e){
+        for(CellMonitor c : this.cellList){
+            c.Listen(e);
+        }
+    }
+
+    public void setTabMonInCell(){
+        cellList.get(0).setTabMon(this);//static so only need 1
+    }
 }

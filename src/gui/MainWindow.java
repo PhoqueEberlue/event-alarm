@@ -40,9 +40,11 @@ public class MainWindow {
         this.frame.setVisible(true);
         this.tabbedPane = new JTabbedPane();
         this.createTabAlarm();
-        this.createTabAlarmMonitor();
         this.createTabMonitor();
+        this.createTabAlarmMonitor();
         this.addAllMonitorCells();
+        this.room.getMonitorA().setTabAlarmMon(this.tabAlarmMonitor);
+        this.room.getMonitorB().setTabAlarmMon(this.tabAlarmMonitor);
         this.frame.getContentPane().add(this.tabbedPane, BorderLayout.CENTER);
     }
 
@@ -60,6 +62,7 @@ public class MainWindow {
         for(Sensor s : this.room.getRadiationSensorsList()){
             this.tabMonitor.addCell(s);
         }
+        this.tabMonitor.setTabMonInCell();
     }
 
     private void createTabMonitor(){
@@ -68,6 +71,7 @@ public class MainWindow {
     
     private void createTabAlarmMonitor() {
         this.tabAlarmMonitor = new TabAlarmMonitor(this.tabbedPane, this);
+        this.tabAlarmMonitor.setTabMon(this.tabMonitor);
     }
 
     public MakeRoomTests getRoom() {
@@ -84,6 +88,14 @@ public class MainWindow {
 
     public Sensor findFireSensor(String name){
         for(Sensor s : this.room.getFireSensorList()){
+            if(s.getName() == name)
+                return s;
+        }
+        return null;
+    }
+
+    public Sensor findGasSensor(String name){
+        for(Sensor s : this.room.getGasSensorList()){
             if(s.getName() == name)
                 return s;
         }

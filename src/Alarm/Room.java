@@ -4,7 +4,7 @@ public class Room {
     private String name;
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public Room(String name) {
@@ -13,8 +13,6 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
-                "name='" + name + '\'' +
-                '}';
+        return "Room " + this.name;
     }
 }
