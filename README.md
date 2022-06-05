@@ -34,7 +34,7 @@ where somebody will have to manually dispatch alarms received. An alarm can only
 * monitor, where one can watch the state of each room : wether there is a current ongoing alarm, the severity and the location.
 
 ## Tests 
-All tests have been done inside the `Tests` folder. There are there tests for the backend, for making each room and a `Main` file, 
+All tests have been done inside the `Tests` folder. Here you'll find tests for the backend, for making each room and a `Main` file, 
 where the current version of the app resides. 
 
 ## Toolset 
